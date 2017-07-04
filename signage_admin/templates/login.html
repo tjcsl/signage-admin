@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Signage - Login</title>
+        <link type="text/css" rel="stylesheet" href="/static/login.css" />
+    </head>
+    <body>
+        {% block content %}
+        <form method="POST" id="loginform">
+            <p id="headertext">Login</p>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="button" />
+        </form>
+        {% endblock %}
+    </body>
+</html>

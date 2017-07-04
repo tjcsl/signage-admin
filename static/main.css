@@ -16,6 +16,11 @@ body {
     text-align: center;
 }
 
+#logout {
+   background-color: #0040a0;
+   display: inline-block; 
+}
+
 #contentdiv {
     padding: 0px;
     margin: 0px;
