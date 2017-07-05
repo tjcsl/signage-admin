@@ -9,64 +9,48 @@
             <a id="logout" class="button" href="/logout">Logout</a>
         </div>
         <div id="contentdiv">
+            {% for sign in all_signs %}
             <div class="pi">
                 <div class="leftdiv">
-                    <p class="piname">Curie</p>
+                    <p class="piname">{{ sign.name }}</p>
                     <br>
+                    {% if sign.landscape %}
                     <img class="landscapescreenshot" src="/static/169.jpg" />
+                    {% else %}
+                    <img class="landscapescreenshot" src="/static/169.jpg" style="height: 320px; width: 180px;" />
+                    {% endif %}
                 </div>
                 <div class="rightdiv">
+                    {% if sign.online %}
                     <div class="online">
                         <img src="/static/check.svg" class="onlineimage"/>
                         <p class="onlinetext">ONLINE</p>
                     </div>
-                    <form>
-                        <button class="button" name="reboot" value="PLACEHOLDER">
-                        <img class="buttonicon" src="/static/reboot.svg" />
-                        Reboot
-                        </button>
-                    </form>
-                    <br>
-                    <a class="button" href="/terminal/PLACEHOLDER">
-                        <img class="buttonicon" src="/static/terminal.svg" />
-                        Terminal
-                    </a>
-                    <br>
-                    <a class="button" href="/vnc/PLACEHOLDER">
-                        <img class="buttonicon" src="/static/monitor.svg" />
-                        VNC
-                    </a>
-                </div>
-            </div>
-            <div class="pi">
-                <div class="leftdiv">
-                    <p class="piname">Galileo</p>
-                    <br>
-                    <img class="landscapescreenshot" src="/static/169.jpg" />
-                </div>
-                <div class="rightdiv">
+                    {% else %}
                     <div class="offline">
                         <img src="/static/x.svg" class="offlineimage"/>
                         <p class="offlinetext">OFFLINE</p>
                     </div>
-                    <form>
-                        <button class="button" name="reboot" value="PLACEHOLDER">
-                        <img class="buttonicon" src="/static/reboot.svg" />
-                        Reboot
+                    {% endif %}
+                    <form action="/main/reboot">
+                        <button class="button" name="hostname" value="{{ sign.hostname }}">
+                            <img class="buttonicon" src="/static/reboot.svg" />
+                            Reboot
                         </button>
                     </form>
                     <br>
-                    <a class="button" href="/terminal/PLACEHOLDER">
+                    <a class="button" href="/terminal/{{ sign.hostname }}">
                         <img class="buttonicon" src="/static/terminal.svg" />
                         Terminal
                     </a>
                     <br>
-                    <a class="button" href="/vnc/PLACEHOLDER">
+                    <a class="button" href="/vnc/{{ sign.hostname }}">
                         <img class="buttonicon" src="/static/monitor.svg" />
                         VNC
                     </a>
                 </div>
             </div>
+            {% endfor %} 
         </div>
     </body>
 </html>

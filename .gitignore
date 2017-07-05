@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# ssh keys
+id_rsa
+id_rsa.pub
