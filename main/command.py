@@ -28,6 +28,7 @@ def create_connection(hostname, username = 'pi'):
         connection.load_system_host_keys()
         connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
+#            connection.connect(hostname, key_filename = keyfile, username = username)
             connection.connect(hostname, key_filename = keyfile, username = username, sock = paramiko.ProxyCommand("nc -x localhost:6536 " + hostname + " 22"))
         except:
             connection.close()
@@ -38,3 +39,9 @@ def run_command(hostname, command, username = 'pi'):
     connection = create_connection(hostname, username)
     stdin, stdout, stderr = connection.exec_command(command)
     return stdout.read()
+
+def is_online(hostname):
+    output = run_command("remote.tjhsst.edu", 'ping -c 1 -W 1 ' + hostname, "2019djones")
+    if b'0 received' in output:
+        return False
+    return True

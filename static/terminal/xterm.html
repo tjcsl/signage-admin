@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>{{ sign.name }} - Terminal</title>
+        <script src="/static/terminal/xterm.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/terminal/xterm.css" />
+    <script type="text/javascript">
+var term = new Terminal();
+term.open(document.getElementById("#terminal"));
+    </script>
+    </head>
+    <body>
+        <div id="terminal"></div>
+    </body>
+</html>

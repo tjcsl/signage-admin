@@ -15,9 +15,9 @@
                     <p class="piname">{{ sign.name }}</p>
                     <br>
                     {% if sign.landscape %}
-                    <img class="landscapescreenshot" src="/static/169.jpg" />
+                    <img class="landscapescreenshot" src="/main/screenshot/?hostname={{ sign.hostname }}" />
                     {% else %}
-                    <img class="landscapescreenshot" src="/static/169.jpg" style="height: 320px; width: 180px;" />
+                    <img class="landscapescreenshot" src="/main/screenshot/?hostname={{ sign.hostname }}" style="height: 320px; width: 180px;" />
                     {% endif %}
                 </div>
                 <div class="rightdiv">

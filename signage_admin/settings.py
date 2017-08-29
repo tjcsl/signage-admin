@@ -25,7 +25,7 @@ SECRET_KEY = '3oev!!92-rvlx1u1q6mwj%ymrje9jmp*k=bdffczf#3_7=%^i@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['signage.karel.pw']
 
 
 # Application definition

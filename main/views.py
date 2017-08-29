@@ -1,22 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.views.decorators.http import condition
 from time import sleep
 
 import threading
+import datetime
 
 from . import models, command
 
 # Create your views here.
 
+# cache of hostname : (screenshot data, time last updated)
+screenshots = {}
+
 @login_required
 def index(request):
     class Wrappa():
         def __init__(self, sign):
-            self.online = True
-            output = command.run_command("remote.tjhsst.edu", 'ping -c 1 -W 1 ' + sign.hostname, "2019djones")
-            if b'0 received' in output:
-                self.online = False
+            self.online = command.is_online(sign.hostname)
             self.name = sign.name
             self.hostname = sign.hostname
             self.landscape = sign.landscape
@@ -44,3 +46,14 @@ def reboot(request):
     connection.close()
     sleep(3)
     return redirect("/main/", permanent = False)
+
+@login_required
+def screenshot(request):
+    hostname = request.GET.get('hostname', '')
+    if hostname == '':
+        return HttpResponseNotFound('404 Not Found')
+    if hostname in screenshots and datetime.datetime.now() - screenshots[hostname][1] < datetime.timedelta(minutes = 1):
+        return HttpResponse(screenshots[hostname][0], content_type = 'image/png')
+    png_data = command.run_command(hostname, 'DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority scrot scrot.png; cat scrot.png; rm scrot.png')
+    screenshots[hostname] = (png_data, datetime.datetime.now())
+    return HttpResponse(png_data, content_type = 'image/png')

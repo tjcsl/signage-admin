@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name = 'index'),
     url(r'reboot/', views.reboot, name = 'reboot'),
+    url(r'screenshot/', views.screenshot, name = 'screenshot'),
 ]
