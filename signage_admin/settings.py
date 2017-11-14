@@ -25,7 +25,7 @@ SECRET_KEY = '3oev!!92-rvlx1u1q6mwj%ymrje9jmp*k=bdffczf#3_7=%^i@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['signage.karel.pw']
+ALLOWED_HOSTS = ['signage.karel.pw', 'localhost']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'main',
 ]
 
@@ -122,3 +123,17 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# config for django channels
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'main.routing.channel_routing',
+    }
+}
+
+# Whether to assume VPN or to use an SSH tunnel
+USE_TUNNEL = False

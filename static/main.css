@@ -32,7 +32,8 @@ body {
 
 .pi {
     border-radius: 1px;
-    box-shadow: 0px 0px 14px -5px #141414;
+    box-shadow: 0px 1px 4px 0 #00000038;
+    background-color: #fafafa;
     display: inline-block;
     padding: 15px;
     padding-top: 0px;
@@ -49,9 +50,13 @@ body {
 .landscapescreenshot {
     height: 180px;
     width: 320px;
+    border: #aaaaaa;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .onlinetext {
+    font-family: sans-serif;
     display: inline-block;
     vertical-align: middle;
     color: #2cc36b;
@@ -88,12 +93,11 @@ body {
 
 .button {
     float: right;
-    border: #dddddd solid;
-    border-width: 1px;
-    border-radius: 3px;
+    border: none;
+    border-radius: 4px;
     font-family: Arial, sans;
     font-size: 14px;
-    box-shadow: 1px 1px 1px 0px;
+    box-shadow: 0px 1px 4px 0px #0000005e;
     padding: 2px 4px;
     margin: 4px 1px;
     background: linear-gradient(#f0f0f0, #eeeeee);

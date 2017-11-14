@@ -104,3 +104,6 @@ ENV/
 # ssh keys
 id_rsa
 id_rsa.pub
+# vim
+*.swp
+*.swo

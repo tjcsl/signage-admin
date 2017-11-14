@@ -24,15 +24,16 @@ def index(request):
             self.landscape = sign.landscape
     signs = []
     threads = []
-    command.init_tunnel() # initalize tunnel to prevent race conditions
+    command.ensure_tunnel() # initalize tunnel to prevent race conditions
+    set
     for sign in models.Sign.objects.all():
-        signs.append(Wrappa(sign))
-#        def func(sig):
-#            signs.append(Wrappa(sig))
-#        threads.append(threading.Thread(target=func, args = (sign,)))
-#        threads[-1].start()
-#    for thread in threads:
-#        thread.join()
+        #signs.append(Wrappa(sign))
+        def func(sig):
+            signs.append(Wrappa(sig))
+        threads.append(threading.Thread(target=func, args = (sign,)))
+        threads[-1].start()
+    for thread in threads:
+        thread.join()
     signs.sort(key = lambda x: x.name)
     return render(request, "main/index.html", { 'all_signs' : signs }) 
 
@@ -52,8 +53,9 @@ def screenshot(request):
     hostname = request.GET.get('hostname', '')
     if hostname == '':
         return HttpResponseNotFound('404 Not Found')
-    if hostname in screenshots and datetime.datetime.now() - screenshots[hostname][1] < datetime.timedelta(minutes = 1):
-        return HttpResponse(screenshots[hostname][0], content_type = 'image/png')
-    png_data = command.run_command(hostname, 'DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority scrot scrot.png; cat scrot.png; rm scrot.png')
+    #if hostname in screenshots and datetime.datetime.now() - screenshots[hostname][1] < datetime.timedelta(minutes = 1):
+    #    return HttpResponse(screenshots[hostname][0], content_type = 'image/png')
+    #png_data = command.run_command(hostname, 'DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority scrot scrot.png; cat scrot.png; rm scrot.png')
+    png_data = command.run_command(hostname, "cd ~/raspi2png; ./raspi2png; cat ./snapshot.png; rm snapshot.png")
     screenshots[hostname] = (png_data, datetime.datetime.now())
     return HttpResponse(png_data, content_type = 'image/png')
