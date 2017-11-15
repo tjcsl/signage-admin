@@ -136,4 +136,4 @@ CHANNEL_LAYERS = {
 }
 
 # Whether to assume VPN or to use an SSH tunnel
-USE_TUNNEL = False
+USE_TUNNEL = True

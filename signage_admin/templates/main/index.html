@@ -32,19 +32,17 @@
                         <p class="offlinetext">OFFLINE</p>
                     </div>
                     {% endif %}
-                    <form action="/main/reboot">
-                        <button class="button" name="hostname" value="{{ sign.hostname }}">
-                            <img class="buttonicon" src="/static/reboot.svg" />
-                            Reboot
-                        </button>
-                    </form>
+                    <a class="button" href="/main/reboot/{{ sign.hostname }}">
+                        <img class="buttonicon" src="/static/reboot.svg" />
+                        Reboot
+                    </a>
                     <br>
-                    <a class="button" href="/terminal/{{ sign.hostname }}">
+                    <a class="button" href="/main/terminal/{{ sign.hostname }}">
                         <img class="buttonicon" src="/static/terminal.svg" />
                         Terminal
                     </a>
                     <br>
-                    <a class="button" href="/vnc/{{ sign.hostname }}">
+                    <a class="button" href="/main/vnc/{{ sign.hostname }}">
                         <img class="buttonicon" src="/static/monitor.svg" />
                         VNC
                     </a>

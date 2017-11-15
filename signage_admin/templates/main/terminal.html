@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/terminal/xterm.css" />
+        <script src="/static/terminal/xterm.js"></script>
+    </head>
+    <body>
+        <div id="terminal">
+        </div>
+    <script>
+var term = new Terminal();
+term.open(document.getElementById("terminal"));
+var host = location.origin.replace(/^http/, "ws")
+var ws = new WebSocket("ws://localhost:8080/terminal/{{ hostname }}")
+ws.onopen = function() {
+    term.on("data", function(data) {
+        ws.send(data);
+    });
+    ws.onmessage = function(e) {
+        term.write(e.data);
+    }
+    ws.onclose = function() {
+        term.destroy();
+        console.log("Connection Closed");
+    }
+}
+    </script>
+    </body>
+</html>

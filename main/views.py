@@ -39,7 +39,7 @@ def index(request):
 
 @login_required
 def reboot(request):
-    hostname = request.GET.get('hostname', '')
+    hostname = request.path.split('/')[-1]
     if hostname == '':
         return HttpResponseBadRequest('Bad Request<br><a href="/main/">Back to main page</a>')
     connection = command.create_connection(hostname)
@@ -59,3 +59,10 @@ def screenshot(request):
     png_data = command.run_command(hostname, "cd ~/raspi2png; ./raspi2png; cat ./snapshot.png; rm snapshot.png")
     screenshots[hostname] = (png_data, datetime.datetime.now())
     return HttpResponse(png_data, content_type = 'image/png')
+
+@login_required
+def terminal(request):
+    hostname = request.path.split('/')[-1]
+    if hostname == '':
+        return HttpResponseNotFound("404 Not Found")
+    return render(request, "main/terminal.html", { 'hostname': hostname  })
