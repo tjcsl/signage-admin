@@ -52,16 +52,17 @@ def run_command(hostname, command, username = 'pi'):
 
 def is_online(hostname):
     if settings.USE_TUNNEL:
-        output = run_command("ras1.tjhsst.edu", 'ping6 -c 1 -W 1 ' + hostname, "2019djones")
+        output = run_command("ras1.tjhsst.edu", 'ping6 -c 1 -W 3 ' + hostname, "2019djones")
         if b'1 received' in output:
             return True
-        output = run_command("ras1.tjhsst.edu", 'ping -c 1 -W 1 ' + hostname, "2019djones")
+        output = run_command("ras1.tjhsst.edu", 'ping -c 1 -W 3 ' + hostname, "2019djones")
         print(output)
         if b'1 received' in output:
             return True
         return False
     else:
-        proc = subprocess.Popen(['ping', '-c', '1', '-W', '1', hostname], stdout=subprocess.PIPE)
+        proc = subprocess.Popen(['ping', '-c', '1', '-W', '3', hostname], stdout=subprocess.PIPE)
         stdout, stderr = proc.communicate()
+        print(stdout)
         return b'1 received' in stdout
 

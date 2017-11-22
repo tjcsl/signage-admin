@@ -22,9 +22,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.login, { 'template_name' : 'login.html' , 'redirect_field_name' : 'next' }, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
-    url(r'^main/', include('main.urls'), name = 'index'),
-    url(r'^accounts/login/$', RedirectView.as_view(url="/login?next=/main", permanent=False), name='index'),
+    url(r'^accounts/login/$', RedirectView.as_view(url="/login?next=/", permanent=False), name='index'),
     url(r'^accounts/logout/$', RedirectView.as_view(url="/logout", permanent=False), name='index'),
     url(r'^favicon.ico$', RedirectView.as_view(url="/static/monitor.svg", permanent=False), name='index'),
-    url(r'^$', RedirectView.as_view(url="/main", permanent=False), name='index'),
+    url(r'^', include('signage-admin.urls'), name = 'index'),
+    #url(r'^$', RedirectView.as_view(url="/signage-adman", permanent=False), name='index'),
 ]

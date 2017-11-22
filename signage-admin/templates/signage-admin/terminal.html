@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/terminal/xterm.css" />
+        <script src="/static/jquery-3.2.1.min.js"></script>
+        <script src="/static/terminal/xterm.js"></script>
+        <script src="/static/terminal/fit/fit.js"></script>
+    </head>
+    <body>
+        <div id="terminal">
+        </div>
+    <script>
+$(document).ready(function() {
+    $(window).resize(function() {
+        $("#terminal").trigger("terminal:resize");
+    });
+});
+/*window.addEventListener("resize", function(e) {
+    e.preventDefault();
+    term.fit();
+});*/
+var term = new Terminal();
+term.open(document.getElementById("terminal"));
+var host = location.origin.replace(/^http/, "ws")
+var ws = new WebSocket(host + "{% url 'terminal' %}/{{ hostname }}")
+ws.onopen = function() {
+    term.on("data", function(data) {
+        ws.send(data);
+    });
+    term.on("resize", function(size) {
+        $.post("{% url 'terminal' %}/resize?rows=" + size.rows + "&cols=" + size.cols, {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value});
+        //$.post("{% url 'terminal' %}/resize?rows=" + size.rows + "&cols=" + size.cols, {csrfmiddlewaretoken: ]").val()});
+        console.log("HOI");
+    });
+    ws.onmessage = function(e) {
+        term.write(e.data);
+    }
+    ws.onclose = function() {
+        term.destroy();
+        console.log("Connection Closed");
+    }
+}
+    </script>
+    </body>
+</html>

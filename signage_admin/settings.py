@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
-    'main',
+    'signage-admin',
 ]
 
 MIDDLEWARE = [
@@ -131,9 +131,9 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             'hosts': [('localhost', 6379)],
         },
-        'ROUTING': 'main.routing.channel_routing',
+        'ROUTING': 'signage-admin.routing.channel_routing',
     }
 }
 
 # Whether to assume VPN or to use an SSH tunnel
-USE_TUNNEL = True
+USE_TUNNEL = False

@@ -7,7 +7,7 @@ from time import sleep
 import threading
 import datetime
 
-from . import models, command
+from . import models, command, consumers
 
 # Create your views here.
 
@@ -35,18 +35,18 @@ def index(request):
     for thread in threads:
         thread.join()
     signs.sort(key = lambda x: x.name)
-    return render(request, "main/index.html", { 'all_signs' : signs }) 
+    return render(request, "signage-admin/index.html", { 'all_signs' : signs }) 
 
 @login_required
 def reboot(request):
     hostname = request.path.split('/')[-1]
     if hostname == '':
-        return HttpResponseBadRequest('Bad Request<br><a href="/main/">Back to main page</a>')
+        return HttpResponseBadRequest('Bad Request<br><a href="/">Back to main page</a>')
     connection = command.create_connection(hostname)
     connection.exec_command('sudo reboot')
     connection.close()
     sleep(3)
-    return redirect("/main/", permanent = False)
+    return redirect("/", permanent = False)
 
 @login_required
 def screenshot(request):
@@ -65,4 +65,14 @@ def terminal(request):
     hostname = request.path.split('/')[-1]
     if hostname == '':
         return HttpResponseNotFound("404 Not Found")
-    return render(request, "main/terminal.html", { 'hostname': hostname  })
+    return render(request, "signage-admin/terminal.html", { 'hostname': hostname  })
+
+@login_required
+def term_resize(request):
+    rows = request.GET.get("rows", "")
+    cols = request.GET.get("cols", "")
+    uname = request.user.username
+    if rows == '' or cols == '' or uname == '':
+        return HttpResponseBadRequest("plz2fix")
+    shell = consumers.user_shells[uname][2]
+    shell.resize_pty(rows=rows, cols=cols)
