@@ -25,7 +25,6 @@ def index(request):
     signs = []
     threads = []
     command.ensure_tunnel() # initalize tunnel to prevent race conditions
-    set
     for sign in models.Sign.objects.all():
         #signs.append(Wrappa(sign))
         def func(sig):
