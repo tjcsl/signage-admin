@@ -9,12 +9,11 @@ cffi==1.11.2
 channels==1.1.8
 chardet==3.0.4
 daphne==1.3.0
-Django==1.11.22
+Django==1.11.23
 django-channels==0.7.0
 oauthlib==2.0.2
-paramiko==2.2.1
+paramiko>2.2.4
 pycparser==2.18
 redis==2.10.5
-requests==2.18.1
-requests-oauthlib==0.8.0
+requests>=2.20.0
 service-identity==17.0.0
